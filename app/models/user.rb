@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
+  has_many :events
+
   # Returns the hash digest of the given string.
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -66,6 +68,17 @@ class User < ActiveRecord::Base
   # Returns true if a password reset has expired.
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
+  end
+
+  def events_summary(dates)
+    user_events = []
+    dates.each do |date|
+      events_starting_today_ids = self.events.where('start_time > ?', date.beginning_of_day).where('start_time < ?', date.end_of_day).pluck(:id)
+      events_ending_today_ids = self.events.where('end_time > ?', date.beginning_of_day).where('end_time < ?', date.end_of_day).pluck(:id)
+      events_count_for_the_date = (events_starting_today_ids + events_ending_today_ids).uniq.count
+      user_events << events_count_for_the_date
+    end
+    user_events
   end
   
   private

@@ -1,0 +1,70 @@
+<% provide(:title, 'Analytics') %>
+
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+        <%= gravatar_for current_user %>
+        <%= current_user.name %>
+      </h1>
+    </section>
+  </aside>
+</div>
+
+<div class="row">
+  <div class="btn">
+    <%= link_to '<h3>Create Event</h3>'.html_safe, new_event_path %>
+  </div>
+
+  <div class='btn'>
+    <%= link_to '<h3>Analytics</h3>'.html_safe, analytics_path %>
+  </div>
+</div>
+
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(function () {
+		    $('#container').highcharts({
+		        chart: {
+		            type: 'column'
+		        },
+		        title: {
+		            text: 'Daily Events Report Chart'
+		        },
+		        subtitle: {
+		            text: 'Source: Smart Calendar'
+		        },
+		        xAxis: {
+		            categories: <%= raw @dates %>,
+		            crosshair: true
+		        },
+		        yAxis: {
+		            min: 0,
+		            tickInterval: 1.0,
+		            title: {
+		                text: 'Number of events'
+		            }
+		        },
+		        tooltip: {
+		            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+		            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+		                '<td style="padding:0"><b>{point.y:.1f} events</b></td></tr>',
+		            footerFormat: '</table>',
+		            shared: true,
+		            useHTML: true
+		        },
+		        plotOptions: {
+		            column: {
+		                pointPadding: 0.2,
+		                borderWidth: 0
+		            }
+		        },
+		        series: <%= raw @data.to_json %>
+		    });
+		});
+	});
+</script>

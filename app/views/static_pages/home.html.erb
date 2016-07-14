@@ -1,14 +1,28 @@
 <div class="center jumbotron">
-  <h1>Welcome to the Sample App</h1>
+  <h1>Welcome to the Smart Calendar Application</h1>
   
   <h2>
-    This is the home page for the 
-    <a href="http://www.railstutorial.org/">Ruby on Rails Tutorial</a>
-    sample application.
+    Features:
   </h2>
-  
-  <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>  
+  <li>
+    You can sign up by clicking on the button below.
+  </li>
+  <li>
+	Create calendar events from the profile page after you login.
+  </li>
+  <li>
+	See the events created in the profile page.
+  </li>
+  <li>
+	See other users' events.
+  </li>
+  <li>
+  	Click on the Analytics link on your profile page and see the events for a day for all users.
+  </li>
+  </h2>
+  <% if current_user.nil? %>
+  	<%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
+  <% else %>
+  	<%= link_to "Go to Profile", user_path(current_user), class: "btn btn-lg btn-primary" %>
+  <% end %>
 </div>
-
-<%= link_to image_tag("rails.png", alt: "Rails logo"),
-            'http://rubyonrails.org' %>

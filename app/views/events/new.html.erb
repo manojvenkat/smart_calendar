@@ -1,0 +1,45 @@
+<h1>Create Event</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@event) do |f| %>
+      <%= render 'shared/events/error_messages' %>
+
+      <%= f.label :name, class: 'padding-top-2' %>
+      <%= f.text_field :name, class: 'form-control' %>
+
+      <%= f.label :description, class: 'padding-top-2' %>
+      <%= f.text_field :description, class: 'form-control' %>
+
+      <%= f.label :start_time, class: 'padding-top-2' %>
+      <%= f.text_field :start_time, class: 'form-control datetimepicker' %>
+
+      <%= f.label :end_time, class: 'padding-top-2' %>
+      <%= f.text_field :end_time, class: 'form-control datetimepicker' %>
+
+      <%= f.submit "Create Event", :id => "create_event", class: "btn btn-primary padding-top-5" %>
+    <% end %>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#event_start_time').datetimepicker({});
+    $('#event_end_time').datetimepicker({});
+
+    $('#create_event').on("click", function(){
+      var event_name = $.trim($("#event_name").val()).length;
+      var event_description = $.trim($("#event_description").val()).length;
+      var event_start_time = $.trim($("#event_start_time").val()).length;
+      var event_end_time = $.trim($("#event_end_time").val()).length;
+      if(event_name == 0 || event_description == 0 || event_end_time == 0 || event_start_time == 0){
+        alert("Please fill the essential fields.");
+        return false;
+      }
+
+    });
+  });
+
+
+</script>

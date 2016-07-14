@@ -9,3 +9,84 @@
     </section>
   </aside>
 </div>
+
+<div class="row">
+  <% if current_user.id == @user.id %>
+    <%= link_to "Create Event", new_event_path, class: "btn btn-lg btn-primary" %>
+  <% end %>
+
+  <%= link_to "Analytics", analytics_path, class: "btn btn-lg btn-primary" %>
+</div>
+
+<div class='row'>
+  <div id="user_list" style="float:left;">
+    <h3> List of Users </h3>
+    <% @users.each do |user| %>
+      <h4> <%= link_to user.name, user_path(user) %> </h4>
+    <% end %>
+  </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>FullCalendar Events with Bootstrap Modal</h1>
+            <br/>
+            <div id="bootstrapModalFullCalendar"></div>
+        </div>
+    </div>
+</div>
+
+<div>
+  <div id="fullCalModal" class="modal fade" style="float:left;">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+                  <h4 id="modalTitle" class="modal-title"></h4>
+              </div>
+              <div id="modalBody" class="modal-body"></div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <a class="btn btn-primary" id="eventUrl" target="_blank">Event Page</a>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">Loading...</div>
+
+<script>
+  $(document).ready(function() {
+      $('#bootstrapModalFullCalendar').fullCalendar({
+          header: {
+              left: 'prev,next today',
+              center: 'prev title next',
+              right: 'month,agendaWeek,agendaDay'
+          },
+          eventClick:  function(event, jsEvent, view) {
+              $('#modalTitle').html(event.title);
+              $('#modalBody').html(event.description);
+              $('#eventUrl').attr('href',event.url);
+              $('#fullCalModal').modal();
+              return false;
+          },
+          events: <%= raw @events.to_json %>
+      });
+  }); 
+
+  $(document).ready(function() {
+
+    var clickOnPopupLink = function(){
+      $('body').on('click', '#create_event', function(){
+        console.log("Yes");
+        $('#modal-window').modal('show');
+      });
+    }
+
+    clickOnPopupLink();
+
+  });
+
+</script>
