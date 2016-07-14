@@ -11,8 +11,10 @@ class EventsController < ApplicationController
   	event_params[:end_time] = process_date_time_string(event_params[:end_time])
   	event_params[:user_id] = current_user.id
   	@event = Event.new(event_params.permit!)
-  	@event.save!
-    Event.delay.generate_repeat_events(event_params)
+  	if @event.save
+      flash[:info] = "Event successfully created."
+      Event.delay.generate_repeat_events(event_params)
+    end
   	redirect_to user_path(current_user)
   end
 

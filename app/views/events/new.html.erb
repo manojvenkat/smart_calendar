@@ -21,7 +21,7 @@
 
       <div class="field form-group">
         <div class="btn-group-horizontal" data-toggle="buttons">
-          <%= f.label :repeat, class: "btn btn-primary active" do %>
+          <%= f.label :repeat, class: "btn btn-primary" do %>
             <%= f.radio_button :repeat, 1 %>
             Daily
           <% end %>
@@ -50,10 +50,15 @@
     $('#create_event').on("click", function(){
       var event_name = $.trim($("#event_name").val()).length;
       var event_description = $.trim($("#event_description").val()).length;
-      var event_start_time = $.trim($("#event_start_time").val()).length;
-      var event_end_time = $.trim($("#event_end_time").val()).length;
-      if(event_name == 0 || event_description == 0 || event_end_time == 0 || event_start_time == 0){
+      var event_start_time = $.trim($("#event_start_time").val());
+      var event_end_time = $.trim($("#event_end_time").val());
+      if(event_name == 0 || event_description == 0 || event_end_time.length == 0 || event_start_time.length == 0){
         alert("Please fill the essential fields.");
+        return false;
+      }
+
+      if(Date.parse(event_start_time) >= Date.parse(event_end_time)){
+        alert("End time should be greater than Start time. Please check.");
         return false;
       }
 
