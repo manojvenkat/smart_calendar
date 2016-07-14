@@ -17,6 +17,25 @@
       <%= f.label :end_time, class: 'padding-top-2' %>
       <%= f.text_field :end_time, class: 'form-control datetimepicker' %>
 
+      <%= "<h4><bold>Repeat options:</bold></h4>".html_safe %>
+
+      <div class="field form-group">
+        <div class="btn-group-horizontal" data-toggle="buttons">
+          <%= f.label :repeat, class: "btn btn-primary active" do %>
+            <%= f.radio_button :repeat, 1 %>
+            Daily
+          <% end %>
+          <%= f.label :repeat, class: "btn btn-primary" do %>
+            <%= f.radio_button :repeat, 2 %>
+            Weekly
+          <% end %>
+          <%= f.label :repeat, class: "btn btn-primary" do %>
+            <%= f.radio_button :repeat, 3 %>
+            monthly
+          <% end %>
+      </div>
+    </div>
+
       <%= f.submit "Create Event", :id => "create_event", class: "btn btn-primary padding-top-5" %>
     <% end %>
   </div>

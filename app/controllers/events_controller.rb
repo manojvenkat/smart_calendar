@@ -12,6 +12,7 @@ class EventsController < ApplicationController
   	event_params[:user_id] = current_user.id
   	@event = Event.new(event_params.permit!)
   	@event.save!
+    Event.delay.generate_repeat_events(event_params)
   	redirect_to user_path(current_user)
   end
 
