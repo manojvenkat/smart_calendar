@@ -19,7 +19,7 @@ gem 'momentjs-rails', '>= 2.9.0'
 gem 'sqlite3',     '1.3.9'
 gem 'daemons'
 gem 'delayed_job_active_record'
-gem 'puma', '3.1.0'
+# gem 'puma', '3.1.0'
 
 group :development, :test do
   gem 'byebug',      '3.4.0'
